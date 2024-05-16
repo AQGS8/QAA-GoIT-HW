@@ -1,22 +1,20 @@
-import { Login } from "../pages/LoginZajecia";
+import { Login } from "../pages/Login";
+import { HomePage } from "../pages/HomePAge";
 
-const LoginPage = new Login();
+const loginPage = new Login();
+const homePage = new HomePage();
 
-
-
-describe("ZadanieDomowe2@GoIT QAA", () => {
-    it("LMS - TEST 1: logowanie przez email user888@gmail.com, oraz wyjście z aplikacji", () => {
-      cy.visit("https://www.edu.goit.global/account/login");
-      cy.login("user888@gmail.com", "1234567890");
-      cy.get('#open-navigation-menu-mobile').click();
-      cy.get(':nth-child(12) > .next-bve2vl').scrollIntoView().should("be.visible").click();
-      cy.url().should('eq', 'https://www.edu.goit.global/account/login');
-    });
-    it("LMS - TEST 2: logowanie przez email testowyqa@qa.team, oraz wyjście z aplikacji", () => {
-    cy.visit("https://www.edu.goit.global/account/login");
-    cy.login("testowyqa@qa.team", "QA!automation-1");
-    cy.get('#open-navigation-menu-mobile').click();
-    cy.get(':nth-child(9) > .next-bve2vl').scrollIntoView().should("be.visible").click();
-    cy.url().should('eq', 'https://www.edu.goit.global/account/login');
+describe("ZadanieDomowe3@GoIT QAA", () => {
+  beforeEach(() => {
+    loginPage.visit();
+  });
+  it("LMS - TEST 1: logowanie przez email user888@gmail.com, oraz wyjście z aplikacji", () => {
+      loginPage.login("user888@gmail.com", "1234567890");
+  });
+  it("LMS - TEST 2: logowanie przez email testowyqa@qa.team, oraz wyjście z aplikacji", () => {
+      loginPage.login("testowyqa@qa.team", "QA!automation-1");
+  });
+  afterEach(() => {
+    homePage.logout();
   });
 });
