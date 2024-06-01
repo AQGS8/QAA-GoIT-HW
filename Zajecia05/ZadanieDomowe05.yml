@@ -1,0 +1,30 @@
+config:
+  payload:
+    - path: 'users.csv'
+      fields:
+        - 'username'
+      order: sequence
+  target: "https://kroki.io"
+  phases:
+    - duration: 2
+      arrivalRate: 5
+      name: Simple SPEED test of KROKI.IO
+  plugins:
+    ensure: {}
+  ensure:
+    thresholds:
+      - http.response_time.p95: 500
+    conditions:
+      - expression: vusers.failed == 0
+      - expression: "http.response_time.max < 1000"
+      - expression: "http.response_time.min < 100"
+      - expression: "http.codes.200 == 20"
+scenarios:
+  - name: Getting a resource
+    flow:
+      - get:
+          url: "/graphviz/svg/eNpLyUwvSizIUHBXqPZIzcnJ17ULzy_KSanlAgB1EAjQ"
+      - post:
+          url: "/graphviz/svg"
+          json:
+            diagram_source: "{{username}}"
